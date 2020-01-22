@@ -26,6 +26,7 @@ import argparse
 import xlnet
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 import torch.nn as nn
 import torch.optim as optim
 from pytorch_pretrained_bert import BertTokenizer
@@ -67,6 +68,8 @@ if __name__ == "__main__":
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=0.01)
+    
+    hist_loss = []
 
     for num_epoch in range(args.num_epoch):
         mems = None
@@ -120,5 +123,12 @@ if __name__ == "__main__":
             mems = new_mems
         
         epoch_loss /= num_step
+        hist_loss.append(epoch_loss)
         print('Number of Epoch: %04d' % (num_epoch + 1),
               'average cost =', '{:.6f}'.format(epoch_loss))
+    
+    plt.plot(range(args.num_epoch), hist_loss, label="origin")
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("XLNet training loss")
+    plt.show()
