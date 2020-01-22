@@ -127,11 +127,11 @@ if __name__ == "__main__":
         print('Number of Epoch: %04d' % (num_epoch + 1),
               'average cost =', '{:.6f}'.format(epoch_loss))
     
-    plt.plot(range(args.num_epoch), hist_loss, label="origin")
+    plt.plot(range(1, args.num_epoch + 1), hist_loss, label="origin")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.title("XLNet training loss")
     #from google.colab import files
-    #plt.savefig("abc.png")
+    plt.savefig("loss.png")
     #files.download("abc.png") 
     plt.show()
