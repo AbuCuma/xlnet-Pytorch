@@ -131,4 +131,7 @@ if __name__ == "__main__":
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.title("XLNet training loss")
+    from google.colab import files
+    plt.savefig("abc.png")
+    files.download("abc.png") 
     plt.show()
