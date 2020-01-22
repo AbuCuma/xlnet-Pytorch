@@ -289,7 +289,7 @@ def _local_perm(inputs, targets, is_masked, perm_size, seq_len):
     # `perm_mask` and `target_mask`
     # non-functional tokens
     non_func_tokens = ~(torch.eq(inputs, SEP_ID) | torch.eq(inputs, CLS_ID))
-    non_mask_tokens = (~is_masked) & non_func_tokens
+    non_mask_tokens = (~is_masked.bool()) & non_func_tokens
     masked_or_func_tokens = ~non_mask_tokens
 
     # Set the permutation indices of non-masked (& non-funcional) tokens to the
