@@ -81,6 +81,7 @@ if __name__ == "__main__":
                                            mask_beta=args.mask_beta)
 
         num_step = 0
+        epoch_loss = 0
         for feature in features:
             permutation = data_utils.make_permute(feature,
                                                   reuse_len=args.reuse_len,
@@ -108,11 +109,16 @@ if __name__ == "__main__":
 
             optimizer.zero_grad()
             total_loss = lm_loss_sum / tgt_mask_sum
+            epoch_loss += total_loss.item()
             print('Number of Epoch: %04d in %04d Step' % ((num_epoch + 1), (num_step + 1)),
                   'cost =', '{:.6f}'.format(total_loss))
             num_step += 1
-
+            
             total_loss.backward()
             optimizer.step()
 
             mems = new_mems
+        
+        epoch_loss /= num_step
+        print('Number of Epoch: %04d' % (num_epoch + 1),
+              'average cost =', '{:.6f}'.format(epoch_loss))
